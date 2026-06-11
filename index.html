@@ -378,7 +378,10 @@ async function connectBluetooth() {
         const device = await navigator.bluetooth.requestDevice({
             filters: [{ services: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e'] }],
             // 이 부분이 핵심입니다. 필터에 쓴 서비스를 반드시 포함하세요.
-            optionalServices: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e'] 
+            // filters 부분이 정확히 아래와 같아야 합니다.
+const device = await navigator.bluetooth.requestDevice({
+    filters: [{ services: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e'] }] // UART 서비스
+});
         });
 
         const server = await device.gatt.connect();
